@@ -6,10 +6,16 @@ const button = document.getElementById('button');
 
 let synth = window.speechSynthesis;
 
+function toggleButtonVisibility() {
+    button.disabled = !button.disabled;
+}
+
 function textToSpeech(joke) {
     let utterance = new SpeechSynthesisUtterance(joke);
     synth.speak(utterance);
-    console.log(utterance);
+    utterance.onend = function() {
+        toggleButtonVisibility();
+    }
     // utterance = new SpeechSynthesisUtterance(delivery);
     // synth.speak(utterance);
     // console.log(utterance);
@@ -33,6 +39,7 @@ async function getJoke() {
             textToSpeech(data.joke);
         else
             textToSpeech(`${data.setup} ${data.delivery}`);
+        toggleButtonVisibility();
     } catch (error) {
         console.log(error);
     }
