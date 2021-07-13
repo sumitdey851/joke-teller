@@ -12,6 +12,8 @@ function toggleButtonVisibility() {
 
 function textToSpeech(joke) {
     let utterance = new SpeechSynthesisUtterance(joke);
+    utterance.voice = synth.getVoices()[3];
+    utterance.rate = 0.9;
     synth.speak(utterance);
     utterance.onend = function() {
         toggleButtonVisibility();
