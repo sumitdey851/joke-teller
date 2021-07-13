@@ -4,14 +4,15 @@
 
 const button = document.getElementById('button');
 
-function textToSpeech(setup, delivery) {
-    let synth = window.speechSynthesis;
-    let utterance = new SpeechSynthesisUtterance(setup);
+let synth = window.speechSynthesis;
+
+function textToSpeech(joke) {
+    let utterance = new SpeechSynthesisUtterance(joke);
     synth.speak(utterance);
     console.log(utterance);
-    utterance = new SpeechSynthesisUtterance(delivery);
-    synth.speak(utterance);
-    console.log(utterance);
+    // utterance = new SpeechSynthesisUtterance(delivery);
+    // synth.speak(utterance);
+    // console.log(utterance);
 };
 
 async function getJoke() {
@@ -28,7 +29,10 @@ async function getJoke() {
         const response = await fetch(apiUrl, params);
         const data = await response.json();
         console.log(data);
-        textToSpeech(data.setup, data.delivery);
+        if(data.setup === undefined)
+            textToSpeech(data.joke);
+        else
+            textToSpeech(`${data.setup} ${data.delivery}`);
     } catch (error) {
         console.log(error);
     }
