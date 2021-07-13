@@ -8,9 +8,10 @@ function textToSpeech(setup, delivery) {
     let synth = window.speechSynthesis;
     let utterance = new SpeechSynthesisUtterance(setup);
     synth.speak(utterance);
+    console.log(utterance);
     utterance = new SpeechSynthesisUtterance(delivery);
     synth.speak(utterance);
-
+    console.log(utterance);
 };
 
 async function getJoke() {
@@ -26,6 +27,7 @@ async function getJoke() {
     try {
         const response = await fetch(apiUrl, params);
         const data = await response.json();
+        console.log(data);
         textToSpeech(data.setup, data.delivery);
     } catch (error) {
         console.log(error);
